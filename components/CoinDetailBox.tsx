@@ -43,7 +43,7 @@ const CoinDetailBox = ({ coinID }) => {
       <Typography textTransform="uppercase" fontSize="40px">
         {symbol}
       </Typography>
-      <Typography fontSize="32px">{`฿${price}`}</Typography>
+      <Typography fontSize="36px" fontWeight="600">{`฿${price}`}</Typography>
       <Box display="flex" alignItems="center">
         {percent24 < 0 && <DownIcon color="error" />}
         {percent24 > 0 && <UpIcon color="primary" />}

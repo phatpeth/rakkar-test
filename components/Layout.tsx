@@ -8,9 +8,6 @@ const theme = createTheme({
     primary: {
       main: teal[500],
     },
-    secondary: {
-      main: green["A200"],
-    },
     error: {
       main: red[500],
     },
