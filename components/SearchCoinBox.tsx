@@ -2,6 +2,7 @@ import * as React from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { useEffect, useState } from "react";
+import { teal } from "@mui/material/colors";
 
 const SearchCoinBox = ({ handleOnChange, defaultValue }) => {
   const [coinList, setCoinList] = useState([]);
@@ -22,24 +23,32 @@ const SearchCoinBox = ({ handleOnChange, defaultValue }) => {
   }, []);
   return (
     <Autocomplete
-      disablePortal
-      defaultValue={defaultValue}
-      id="search-coin-box"
       blurOnSelect
-      options={coinList}
-      sx={{ minWidth: "600px" }}
-      onChange={handleOnChange}
-      isOptionEqualToValue={(option, value) => option?.id === value?.id}
+      defaultValue={defaultValue}
       disableClearable
+      disablePortal
+      id="search-coin-box"
+      isOptionEqualToValue={(option, value) => option?.id === value?.id}
+      onChange={handleOnChange}
+      options={coinList}
+      sx={{ minWidth: "580px" }}
       renderInput={(params) => (
         <TextField
           {...params}
+          InputProps={{
+            ...params.InputProps,
+            disableUnderline: true,
+            endAdornment: null,
+          }}
           InputLabelProps={{ style: { display: "none" } }}
           placeholder="Search Here"
           variant="standard"
           sx={{
             ".MuiInputBase-input.MuiInput-input": {
-              fontSize: "36px",
+              fontSize: "48px",
+            },
+            "& .MuiInput-input:hover": {
+              backgroundColor: teal[50],
             },
           }}
           fullWidth

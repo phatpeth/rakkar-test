@@ -1,28 +1,20 @@
 import { Typography } from "@mui/material";
+import { red, teal } from "@mui/material/colors";
 import { createChart, ColorType, BarData } from "lightweight-charts";
 import React, { useEffect, useRef, useState } from "react";
 
 const ChartComponent = (props) => {
-  const {
-    data,
-    colors: {
-      backgroundColor = "white",
-      lineColor = "#2962FF",
-      textColor = "black",
-      areaTopColor = "#2962FF",
-      areaBottomColor = "rgba(41, 98, 255, 0.28)",
-    } = {},
-    timeRange,
-  } = props;
+  const { data, timeRange } = props;
 
   const chartContainerRef = useRef(null);
   const [ohlc, setOhlc] = useState("");
+  const [isUp, setIsUp] = useState(false);
 
   useEffect(() => {
     const chart = createChart(chartContainerRef.current, {
       layout: {
-        background: { type: ColorType.Solid, color: backgroundColor },
-        textColor,
+        background: { type: ColorType.Solid, color: "white" },
+        textColor: "black",
       },
       width: chartContainerRef.current?.clientWidth,
       height: 300,
@@ -37,11 +29,11 @@ const ChartComponent = (props) => {
     });
 
     const newSeries = chart.addCandlestickSeries({
-      upColor: "#26a69a",
-      downColor: "#ef5350",
+      upColor: teal[400],
+      downColor: red[400],
       borderVisible: false,
-      wickUpColor: "#26a69a",
-      wickDownColor: "#ef5350",
+      wickUpColor: teal[400],
+      wickDownColor: red[400],
     });
     const handleResize = () => {
       chart.applyOptions({ width: chartContainerRef.current.clientWidth });
@@ -55,6 +47,7 @@ const ChartComponent = (props) => {
           newSeries
         ) as BarData;
         setOhlc(`O: ${open}  H: ${high}  L: ${low}  C: ${close}`);
+        setIsUp(open < close);
       }
     });
 
@@ -68,7 +61,13 @@ const ChartComponent = (props) => {
 
   return (
     <>
-      <Typography>{ohlc}</Typography>
+      <Typography
+        color={({ palette }) =>
+          isUp ? palette.primary.main : palette.error.main
+        }
+      >
+        {ohlc}
+      </Typography>
       <div ref={chartContainerRef} />
     </>
   );

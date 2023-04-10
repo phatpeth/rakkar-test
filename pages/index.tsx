@@ -2,10 +2,11 @@ import ChartComponent from "../components/Chart";
 import Layout from "../components/Layout";
 import Head from "next/head";
 import SearchCoinBox from "../components/SearchCoinBox";
-import { Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import ToggleTimeRange from "../components/ToggleTimeRange";
 import { useEffect, useState } from "react";
 import { TTimeRange } from "../types";
+import CoinDetailBox from "../components/CoinDetailBox";
 
 const getDays = (timeRange: TTimeRange) => {
   if (timeRange === "24h") return 1;
@@ -74,19 +75,22 @@ const App = () => {
         <title>Coin Search</title>
       </Head>
       <Layout>
+        <Box mb={3}>
+          <SearchCoinBox
+            handleOnChange={handleOnChange}
+            defaultValue={trendingCoin}
+          />
+        </Box>
         <Grid
           container
           direction="row"
           justifyContent="space-between"
           alignItems="center"
         >
-          <Grid item mb={2}>
-            <SearchCoinBox
-              handleOnChange={handleOnChange}
-              defaultValue={trendingCoin}
-            />
+          <Grid item mb={3}>
+            <CoinDetailBox coinID={coinID} />
           </Grid>
-          <Grid item mb={2}>
+          <Grid item mb={3}>
             <ToggleTimeRange
               onChange={handleOnTimeRangeChange}
               value={timeRange}
